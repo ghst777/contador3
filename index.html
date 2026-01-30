@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Eu te amo ❤️</title>
+  <style>
+    body {
+      height: 100vh;
+      background: linear-gradient(180deg, #ffb6c1, #ffe4e1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 22px;
+      border: none;
+      border-radius: 30px;
+      background: #ff004f;
+      color: white;
+      cursor: pointer;
+    }
+
+    .contador {
+      display: none;
+      margin-top: 20px;
+      font-size: 22px;
+      color: #d6004c;
+    }
+
+    .tempo {
+      font-weight: bold;
+      font-size: 26px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <button id="botao">Clique aqui!</button>
+
+    <div class="contador" id="contador">
+      <p><strong>Eu te amo há:</strong></p>
+      <p class="tempo" id="tempo"></p>
+    </div>
+  </div>
+
+  <!-- Música -->
+  <audio id="musica" src="musica.mp3" loop></audio>
+
+  <script>
+    const botao = document.getElementById("botao");
+    const contador = document.getElementById("contador");
+    const tempoEl = document.getElementById("tempo");
+    const musica = document.getElementById("musica");
+
+    // Natal de 2024 às 20:40
+    const dataInicial = new Date(2024, 11, 25, 20, 40, 0);
+
+    botao.addEventListener("click", () => {
+      botao.style.display = "none";
+      contador.style.display = "block";
+      musica.play();
+      atualizarContador();
+      setInterval(atualizarContador, 1000);
+    });
+
+    function atualizarContador() {
+      const agora = new Date();
+      let diff = agora - dataInicial;
+
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      diff %= (1000 * 60 * 60 * 24);
+
+      const horas = Math.floor(diff / (1000 * 60 * 60));
+      diff %= (1000 * 60 * 60);
+
+      const minutos = Math.floor(diff / (1000 * 60));
+      diff %= (1000 * 60);
+
+      const segundos = Math.floor(diff / 1000);
+
+      tempoEl.textContent =
+        `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
+    }
+  </script>
+
+</body>
+</html>
