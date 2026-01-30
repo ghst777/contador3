@@ -7,62 +7,57 @@
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 
 <style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #ff4d6d, #ff758f);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    font-family: 'Dancing Script', cursive;
-    color: white;
-  }
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff4d6d, #ff758f);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: 'Dancing Script', cursive;
+  color: white;
+}
 
-  .container {
-    text-align: center;
-    z-index: 2;
-  }
+.container {
+  text-align: center;
+  z-index: 2;
+}
 
-  button {
-    font-size: 28px;
-    padding: 15px 35px;
-    border: none;
-    border-radius: 30px;
-    background: white;
-    color: #ff4d6d;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
+button {
+  font-size: 28px;
+  padding: 15px 35px;
+  border: none;
+  border-radius: 30px;
+  background: white;
+  color: #ff4d6d;
+  cursor: pointer;
+}
 
-  button:hover {
-    transform: scale(1.1);
-  }
+#contador {
+  display: none;
+  margin-top: 30px;
+  font-size: 34px;
+}
 
-  #contador {
-    display: none;
-    margin-top: 30px;
-    font-size: 34px;
-  }
+.tempo {
+  font-size: 26px;
+  margin-top: 15px;
+}
 
-  .tempo {
-    font-size: 26px;
-    margin-top: 15px;
-  }
+.coracao {
+  position: absolute;
+  top: -40px;
+  font-size: 22px;
+  animation: cair linear infinite;
+}
 
-  .coracao {
-    position: absolute;
-    top: -50px;
-    font-size: 24px;
-    animation: cair linear infinite;
+@keyframes cair {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
   }
-
-  @keyframes cair {
-    to {
-      transform: translateY(110vh);
-      opacity: 0;
-    }
-  }
+}
 </style>
 </head>
 
@@ -80,50 +75,48 @@
 <audio id="musica" src="audio/musica.mp3" loop></audio>
 
 <script>
-  const botao = document.getElementById("botao");
-  const contador = document.getElementById("contador");
-  const tempo = document.getElementById("tempo");
-  const musica = document.getElementById("musica");
+const botao = document.getElementById("botao");
+const contador = document.getElementById("contador");
+const tempo = document.getElementById("tempo");
+const musica = document.getElementById("musica");
 
-  // DATA CORRETA (Natal 2024 às 20:40 no Brasil)
-  const inicio = new Date(2024, 11, 25, 20, 40, 0);
+const inicio = new Date(2024, 11, 25, 20, 40, 0); // Natal 2024 20:40
 
-  botao.addEventListener("click", () => {
-    botao.style.display = "none";
-    contador.style.display = "block";
+botao.addEventListener("click", () => {
+  botao.style.display = "none";
+  contador.style.display = "block";
+  musica.play();
 
-    musica.volume = 1;
-    musica.play();
-
-    setInterval(() => {
-      const agora = new Date();
-      let diff = agora - inicio;
-
-      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-      diff %= (1000 * 60 * 60 * 24);
-      const horas = Math.floor(diff / (1000 * 60 * 60));
-      diff %= (1000 * 60 * 60);
-      const minutos = Math.floor(diff / (1000 * 60));
-      const segundos = Math.floor(diff / 1000);
-
-      tempo.textContent =
-        `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
-    }, 1000);
-  });
-
-  // CHUVA DE CORAÇÕES 💕
   setInterval(() => {
-    const coracao = document.createElement("div");
-    coracao.className = "coracao";
-    coracao.innerHTML = "❤️";
-    coracao.style.left = Math.random() * 100 + "vw";
-    coracao.style.animationDuration = (Math.random() * 3 + 3) + "s";
-    document.body.appendChild(coracao);
+    let diff = new Date() - inicio;
 
-    setTimeout(() => coracao.remove(), 6000);
-  }, 300);
+    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+    diff %= (1000 * 60 * 60 * 24);
+
+    const horas = Math.floor(diff / (1000 * 60 * 60));
+    diff %= (1000 * 60 * 60);
+
+    const minutos = Math.floor(diff / (1000 * 60));
+    diff %= (1000 * 60);
+
+    const segundos = Math.floor(diff / 1000);
+
+    tempo.textContent =
+      `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
+  }, 1000);
+});
+
+// corações 💖
+setInterval(() => {
+  const c = document.createElement("div");
+  c.className = "coracao";
+  c.innerHTML = "❤️";
+  c.style.left = Math.random() * 100 + "vw";
+  c.style.animationDuration = (Math.random() * 3 + 3) + "s";
+  document.body.appendChild(c);
+  setTimeout(() => c.remove(), 6000);
+}, 300);
 </script>
 
 </body>
 </html>
-
