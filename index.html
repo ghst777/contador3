@@ -1,71 +1,129 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Eu te amo</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: white;
-      text-align: center;
-      padding-top: 100px;
+<meta charset="UTF-8">
+<title>Eu te amo</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff4d6d, #ff758f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-family: 'Dancing Script', cursive;
+    color: white;
+  }
+
+  .container {
+    text-align: center;
+    z-index: 2;
+  }
+
+  button {
+    font-size: 28px;
+    padding: 15px 35px;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    color: #ff4d6d;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+  }
+
+  #contador {
+    display: none;
+    margin-top: 30px;
+    font-size: 34px;
+  }
+
+  .tempo {
+    font-size: 26px;
+    margin-top: 15px;
+  }
+
+  .coracao {
+    position: absolute;
+    top: -50px;
+    font-size: 24px;
+    animation: cair linear infinite;
+  }
+
+  @keyframes cair {
+    to {
+      transform: translateY(110vh);
+      opacity: 0;
     }
-    button {
-      font-size: 24px;
-      padding: 15px 30px;
-      cursor: pointer;
-    }
-    #contador {
-      margin-top: 30px;
-      font-size: 28px;
-      display: none;
-    }
-  </style>
+  }
+</style>
 </head>
+
 <body>
 
-  <button id="botao">Clique aqui!</button>
+<div class="container">
+  <button id="botao">Clique aqui ❤️</button>
 
   <div id="contador">
-    <p>Eu te amo há:</p>
-    <span id="tempo"></span>
+    <div>Eu te amo há:</div>
+    <div class="tempo" id="tempo"></div>
   </div>
+</div>
 
-  <audio id="musica" src="audio/musica.mp3" loop></audio>
+<audio id="musica" src="audio/musica.mp3" loop></audio>
 
-  <script>
-    const botao = document.getElementById("botao");
-    const contador = document.getElementById("contador");
-    const tempo = document.getElementById("tempo");
-    const musica = document.getElementById("musica");
+<script>
+  const botao = document.getElementById("botao");
+  const contador = document.getElementById("contador");
+  const tempo = document.getElementById("tempo");
+  const musica = document.getElementById("musica");
 
-    const inicio = new Date("2024-12-25T20:40:00");
+  // DATA CORRETA (Natal 2024 às 20:40 no Brasil)
+  const inicio = new Date(2024, 11, 25, 20, 40, 0);
 
-    botao.addEventListener("click", () => {
-      botao.style.display = "none";
-      contador.style.display = "block";
+  botao.addEventListener("click", () => {
+    botao.style.display = "none";
+    contador.style.display = "block";
 
-      musica.volume = 1;
-      musica.currentTime = 0;
-      musica.play();
+    musica.volume = 1;
+    musica.play();
 
-      setInterval(() => {
-        const agora = new Date();
-        let diff = agora - inicio;
+    setInterval(() => {
+      const agora = new Date();
+      let diff = agora - inicio;
 
-        const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-        diff %= (1000 * 60 * 60 * 24);
-        const horas = Math.floor(diff / (1000 * 60 * 60));
-        diff %= (1000 * 60 * 60);
-        const minutos = Math.floor(diff / (1000 * 60));
-        const segundos = Math.floor(diff / 1000);
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      diff %= (1000 * 60 * 60 * 24);
+      const horas = Math.floor(diff / (1000 * 60 * 60));
+      diff %= (1000 * 60 * 60);
+      const minutos = Math.floor(diff / (1000 * 60));
+      const segundos = Math.floor(diff / 1000);
 
-        tempo.textContent =
-          `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
-      }, 1000);
-    });
-  </script>
+      tempo.textContent =
+        `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
+    }, 1000);
+  });
+
+  // CHUVA DE CORAÇÕES 💕
+  setInterval(() => {
+    const coracao = document.createElement("div");
+    coracao.className = "coracao";
+    coracao.innerHTML = "❤️";
+    coracao.style.left = Math.random() * 100 + "vw";
+    coracao.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(coracao);
+
+    setTimeout(() => coracao.remove(), 6000);
+  }, 300);
+</script>
 
 </body>
 </html>
+
